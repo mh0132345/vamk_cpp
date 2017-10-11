@@ -38,7 +38,9 @@ int main(void){
 	employee *all_employee = new employee[100];
 	number_of_employee = 10;
 	for(i=0; i<10; i++){
-		all_employee[i].set_values("abc", to_string(i), 100);
+		string s;
+		s.push_back((char)('0'+i));
+		all_employee[i].set_values("abc",s, 100);
 		all_employee[i].print_values();
 	}
 
@@ -47,6 +49,7 @@ int main(void){
 		cin >> choose;
 		switch(choose){
 			case 'A':{
+				//require input from user, set_value for the new employee in array
 				string name, id;
 				int salary;
 				cout << "Input name: ";
@@ -63,18 +66,31 @@ int main(void){
 				string id;
 				cout << "Input ID of employee who you want to remove: ";
 				cin >> id;
-				employee *p = search_employee(id, all_employee, number_of_employee);
-				delete search_employee(id, all_employee, number_of_employee);
-				p = NULL;
-				cout << "Employee deleted!" << endl;
+				employee *found = search_employee(id, all_employee, number_of_employee);
+				//if employee found with id
+				if(found!=0){
+					//move all other employee to one up in all_employee array
+					int i = found - all_employee;
+					number_of_employee--;
+					for(;i<number_of_employee-1;i++)
+						all_employee[i] = all_employee[i+1];
+					cout << "Employee deleted!" << endl;
+				}
+				else
+					cout << "No employee with that ID!" << endl;
 				break;
 			}
 			case 'S':{
 				string id;
 				cout << "Input ID of employee who you want to search: ";
 				cin >> id;
-				search_employee(id, all_employee, number_of_employee)->print_values();
-				break;
+				employee *found = search_employee(id, all_employee, number_of_employee);
+				//if found employee with that id
+				if(found!= 0)
+					found->print_values();
+				else
+					cout << "No employee with that ID!" << endl;
+			break;
 			}
 			case 'Q':
 				cout << "See you next time!" << endl;
