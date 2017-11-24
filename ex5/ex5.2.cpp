@@ -226,7 +226,7 @@ int main(void){
                 string room_number;
                 cout << "Input room number: ";
                 cin >> room_number;
-                int index_found = search_index_room(all_room, curr_room, "1");
+                int index_found = search_index_room(all_room, curr_room, room_number);
                 all_room[index_found].getInfo();
                 break;
             }
